@@ -27,7 +27,7 @@ export class CoursesService {
     }
 
     async findAllReviews(courseId: string): Promise<Review[]> {
-        return this.reviewRepository.find({ where: { courseId: new ObjectID(courseId) } });
+        return this.reviewRepository.find({ where: { courseId: courseId } });
     }
 
     async createReview(createReviewDto: CreateReviewDto) {
