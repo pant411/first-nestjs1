@@ -20,7 +20,7 @@ export class UsersService {
             },
             {
                 id: '1',
-                username: 'john',
+                username: 'johny',
                 password: 'hungry'
             }
         ]

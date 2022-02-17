@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
 import { ParseObjectIdPipe } from '../common/pipes';
 
 import { ObjectID } from 'mongodb';
@@ -10,6 +10,7 @@ import { CoursesService } from './courses.service';
 
 import { CreateCourseDto } from './dto/create-course.dto';
 import { CreateReviewDto } from './dto/create-review-dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 
 @Controller('courses')
@@ -21,6 +22,7 @@ export class CoursesController {
         return this.coursesService.findAll();
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post()
     async create(@Body() createCourseDto: CreateCourseDto) {
         return this.coursesService.create(createCourseDto);
@@ -31,6 +33,7 @@ export class CoursesController {
         return this.coursesService.findAllReviews(courseId);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post(':courseId/reviews')
     async createReview(@Param('courseId', ParseObjectIdPipe) courseId: ObjectID,
         @Body() createReviewDto: CreateReviewDto) {
